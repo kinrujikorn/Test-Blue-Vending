@@ -2,15 +2,20 @@ from fastapi import FastAPI
 from app.database import engine, Base
 from app.api import vending
 from fastapi.middleware.cors import CORSMiddleware
+from contextlib import asynccontextmanager
 import time
-from app.models import product
+import app.models
 
-app = FastAPI()
 
-@app.on_event("startup")
-def startup():
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # startup
     time.sleep(2)
     Base.metadata.create_all(bind=engine)
+    yield
+    # shutdown (ยังไม่ต้องทำอะไร)
+
+app = FastAPI(lifespan=lifespan)
 
 app.include_router(vending.router)
 

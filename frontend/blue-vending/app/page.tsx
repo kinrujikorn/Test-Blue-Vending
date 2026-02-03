@@ -18,6 +18,7 @@ export default function Home() {
 
   const selectedProduct = products.find((p) => p.id === selected);
 
+  // Fetch Products
   const loadProducts = async () => {
     try {
       const data = await fetchProducts();
@@ -30,11 +31,13 @@ export default function Home() {
     loadProducts();
   }, []);
 
+  // Calculate totalMoney
   const totalMoney = Object.entries(money).reduce(
     (sum, [d, q]) => sum + Number(d) * q,
     0,
   );
 
+  //Purchase Step
   const buy = async () => {
     if (!selectedProduct) {
       setMessage("Please select a product");
@@ -61,6 +64,7 @@ export default function Home() {
     }
   };
 
+  // Calculate remaining
   const remaining = selectedProduct
     ? Math.max(selectedProduct.price - totalMoney, 0)
     : 0;

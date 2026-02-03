@@ -2,10 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-const API_URL = process.env.NEXT_PUBLIC_API_URL;
-
 import { MachineCash, Product } from "../lib/types";
-
 import {
   fetchProducts,
   fetchMachineCash,
@@ -14,6 +11,8 @@ import {
   deleteProduct,
   updateMachineCash,
 } from "../api/api";
+
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export default function AdminPage() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -49,6 +48,7 @@ export default function AdminPage() {
     stock?: string;
   }>({});
 
+  // Fetch Products And Cash
   const loadData = async () => {
     try {
       const [products, cash] = await Promise.all([
@@ -65,12 +65,11 @@ export default function AdminPage() {
     }
   };
 
-  // ✅ useEffect เหลือแค่ตัวเดียว
   useEffect(() => {
     loadData();
   }, []);
 
-  // ✅ updateStock เรียกใช้ loadData ได้แล้ว
+  // Update Product Stock
   const updateStock = async (productId: number) => {
     if (editStock < 0) return;
 
@@ -83,6 +82,7 @@ export default function AdminPage() {
     }
   };
 
+  // UpdateCash
   const updateCash = async (cashId: number) => {
     if (editQuantity < 0) return;
 
@@ -95,6 +95,7 @@ export default function AdminPage() {
     }
   };
 
+  // Add Product
   const addProduct = async () => {
     if (!validateAddProduct()) return;
 
@@ -115,6 +116,7 @@ export default function AdminPage() {
     }
   };
 
+  // Delete Product
   const deleteProductHandler = async () => {
     if (!deleteProductId) return;
 
@@ -129,14 +131,8 @@ export default function AdminPage() {
       console.error(err);
     }
   };
-  if (loading) {
-    return (
-      <main className="min-h-screen flex items-center justify-center text-white bg-neutral-900">
-        Loading admin data...
-      </main>
-    );
-  }
-  // Validate Form
+
+  // Validate Add Product Form
   const validateAddProduct = () => {
     const newErrors: typeof errors = {};
 
@@ -156,11 +152,13 @@ export default function AdminPage() {
     return Object.keys(newErrors).length === 0;
   };
 
+  // Calculate totalMoney
   const totalMoney = cash.reduce(
     (sum, c) => sum + c.denomination * c.quantity,
     0,
   );
 
+  // Loading Session
   if (loading) {
     return (
       <main className="min-h-screen flex items-center justify-center text-white bg-neutral-900">
