@@ -4,3 +4,9 @@ export type Product = {
   price: number;
   stock: number;
 };
+
+export type MachineCash = {
+  id: number;
+  denomination: number;
+  quantity: number;
+};
