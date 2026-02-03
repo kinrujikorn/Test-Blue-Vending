@@ -54,7 +54,7 @@ def log_transaction(
     db.add(tx)
 
 
-
+# API Fetch All Products
 @router.get("/products")
 def get_products():
     db: Session = SessionLocal()
@@ -64,6 +64,7 @@ def get_products():
     db.close()
     return products
 
+# API Fetch All Machine Cash
 @router.get("/machine-cash")
 def get_machine_cash():
     db: Session = SessionLocal()
@@ -71,11 +72,11 @@ def get_machine_cash():
     db.close()
     return machine_cash
 
+
+# API Purchase
 @router.post("/purchase", response_model=PurchaseResponse)
 def purchase(req: PurchaseRequest):
     db: Session = SessionLocal()
-
-    
 
     product = db.query(Product).filter(Product.id == req.product_id).first()
 
@@ -153,7 +154,7 @@ def purchase(req: PurchaseRequest):
         change=change
     )
 
-
+# API Update Product Stock
 @router.put("/products/{product_id}")
 def update_product_stock(product_id: int, payload: ProductUpdate):
     if payload.stock < 0:
@@ -177,6 +178,7 @@ def update_product_stock(product_id: int, payload: ProductUpdate):
 
     return product
 
+# API Update Machine Cash
 @router.put("/machine-cash/{cash_id}")
 def update_machine_cash(cash_id: int, payload: MachineCashUpdate):
     if payload.quantity < 0:
@@ -201,6 +203,8 @@ def update_machine_cash(cash_id: int, payload: MachineCashUpdate):
         "cash": cash
     }
 
+
+# API Create New Product   
 @router.post("/products")
 def create_product(product: ProductCreate):
     db: Session = SessionLocal()
@@ -213,7 +217,7 @@ def create_product(product: ProductCreate):
     db.commit()
     return new_product
 
-
+# API Delete Product
 @router.delete("/products/{product_id}")
 def delete_product(product_id: int):
     db: Session = SessionLocal()

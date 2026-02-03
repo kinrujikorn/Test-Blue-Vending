@@ -5,7 +5,7 @@ from app.models.machine_cash import MachineCash
 def seed():
     db = SessionLocal()
 
-    # ป้องกัน seed ซ้ำ
+    # Defend Same Seed
     if db.query(Product).first():
         print("DB already seeded")
         db.close()
