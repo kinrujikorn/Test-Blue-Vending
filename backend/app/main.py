@@ -3,6 +3,7 @@ from app.database import engine, Base
 from app.api import vending
 from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
+from app.seed import seed
 import time
 import app.models
 
@@ -12,8 +13,10 @@ async def lifespan(app: FastAPI):
     # startup
     time.sleep(2)
     Base.metadata.create_all(bind=engine)
+    seed() 
     yield
-    # shutdown (ยังไม่ต้องทำอะไร)
+    # shutdown 
+    
 
 app = FastAPI(lifespan=lifespan)
 

@@ -34,12 +34,6 @@ DATABASE_URL=postgresql+psycopg2://admin:admin123@localhost:5432/vending_machine
 uvicorn app.main:app --reload
 ```
 
-#### Seed Initial Data
-
-```bash
-python seed.py
-```
-
 ---
 
 ### 2️⃣ Frontend Setup
