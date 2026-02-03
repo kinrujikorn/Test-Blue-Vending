@@ -3,7 +3,23 @@
 This project is a **Full-stack Web Application** developed as part of the **SE Challenge**.  
 The application simulates a **Simple Vending Machine** with product selection, payment handling, change calculation, and admin stock management.
 
-## 🛠️ Setup Instructions (Local)
+---
+
+## 🐳 Docker Setup
+
+```bash
+docker-compose up --build
+```
+
+This will start:
+
+- Backend (FastAPI)
+- PostgreSQL
+- Frontend
+
+---
+
+## 🛠️ Setup Instructions (Local) (Optional)
 
 ### 1️⃣ Backend Setup
 
@@ -66,22 +82,6 @@ pytest -v
 - Products API
 - Machine cash update
 - Purchase logic (success & failure cases)
-
----
-
-## 🐳 Docker Setup (Optional)
-
-```bash
-docker-compose up --build
-```
-
-This will start:
-
-- Backend (FastAPI)
-- PostgreSQL
-- Frontend
-
----
 
 ---
 
